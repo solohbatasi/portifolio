@@ -35,6 +35,15 @@ export const profile = {
     linkedInUrl: null, // TODO: Add Solomon's verified LinkedIn URL.
     cvPath: null, // TODO: Add the public CV path after the document is approved.
   },
+  support: {
+    description:
+      'If my work, projects or technical resources have helped you, you can support what I am building through a secure M-Pesa payment powered by Kadi.',
+    currency: 'KES',
+    endpoint: '/api/support/coffee',
+    presetAmounts: [100, 250, 500, 1000],
+    minimumAmount: 50,
+    maximumAmount: 10000,
+  },
   credibility: [
     'Enterprise systems',
     'Payment integrations',
