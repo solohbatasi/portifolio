@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Solomon Batasi is a Full-Stack Software Engineer and Solutions Architect building reliable digital systems, APIs and integrations."
+    />
+    <meta name="theme-color" content="#07111f" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Solomon Batasi — Full-Stack Software Engineer" />
+    <meta
+      property="og:description"
+      content="Enterprise software engineering, API architecture, payment integrations and production delivery."
+    />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Solomon Batasi — Full-Stack Software Engineer" />
+    <meta
+      name="twitter:description"
+      content="Enterprise software engineering, API architecture, payment integrations and production delivery."
+    />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script>
+      ;(() => {
+        try {
+          const storedTheme = localStorage.getItem('solomon-portfolio-theme')
+          const theme =
+            storedTheme === 'light' || storedTheme === 'dark'
+              ? storedTheme
+              : matchMedia('(prefers-color-scheme: dark)').matches
+                ? 'dark'
+                : 'light'
+          document.documentElement.dataset.theme = theme
+          document.documentElement.style.colorScheme = theme
+        } catch {
+          document.documentElement.dataset.theme = 'dark'
+          document.documentElement.style.colorScheme = 'dark'
+        }
+      })()
+    </script>
+    <title>Solomon Batasi — Full-Stack Software Engineer</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
