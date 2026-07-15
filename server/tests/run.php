@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Portfolio\Support\Config;
 use Portfolio\Support\ConnectionException;
+use Portfolio\Support\EnvironmentLoader;
 use Portfolio\Support\FileRateLimiter;
 use Portfolio\Support\KadiClient;
 use Portfolio\Support\RateLimiter;
@@ -124,6 +125,19 @@ function successResponse(): TransportResponse
 }
 
 $tests = new TestRunner();
+
+$tests->test('project environment file loads without overriding process variables', function () use ($tests): void {
+    $path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'coffee-env-test-' . bin2hex(random_bytes(6));
+    file_put_contents($path, "COFFEE_TEST_FILE_VALUE=from-file\nCOFFEE_TEST_PRIORITY=from-file\n");
+    putenv('COFFEE_TEST_FILE_VALUE');
+    putenv('COFFEE_TEST_PRIORITY=from-process');
+    EnvironmentLoader::loadFirstExisting([$path]);
+    $tests->assertSame('from-file', getenv('COFFEE_TEST_FILE_VALUE'));
+    $tests->assertSame('from-process', getenv('COFFEE_TEST_PRIORITY'));
+    putenv('COFFEE_TEST_FILE_VALUE');
+    putenv('COFFEE_TEST_PRIORITY');
+    unlink($path);
+});
 
 $tests->test('valid STK Push initiation', function () use ($tests): void {
     $transport = new FakeTransport();

@@ -1,3 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Configure VITE_PUBLIC_SITE_URL to generate production sitemap entries. -->
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></urlset>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://solo.empowermentmissions.org/</loc></url>
+  <url><loc>https://solo.empowermentmissions.org/projects/kadi-payment-gateway</loc></url>
+  <url><loc>https://solo.empowermentmissions.org/projects/education-early-warning-system</loc></url>
+  <url><loc>https://solo.empowermentmissions.org/projects/water-utility-billing-platform</loc></url>
+  <url><loc>https://solo.empowermentmissions.org/projects/pulsetik-events-voting</loc></url>
+  <url><loc>https://solo.empowermentmissions.org/projects/college-management-system</loc></url>
+  <url><loc>https://solo.empowermentmissions.org/projects/school-verification-platform</loc></url>
+  <url><loc>https://solo.empowermentmissions.org/projects/isp-router-management-saas</loc></url>
+  <url><loc>https://solo.empowermentmissions.org/projects/driving-school-management-system</loc></url>
+</urlset>

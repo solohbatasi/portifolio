@@ -229,6 +229,8 @@ COFFEE_RATE_LIMIT_DIR=/a/private/writable/path/coffee-rate-limits
 
 Use a writable rate-limit directory outside `public_html` where the host permits it. If cPanel does not expose environment configuration, ask the provider to set it; do not create a secret-bearing file in the website. For a subdirectory deployment, set `COFFEE_FRONTEND_URL` to the complete subdirectory URL. The API derives the deployment prefix from its script path.
 
+On cPanel deployments where the domain document root is the generated `dist/` directory, the PHP runtime can also read the project-root `.env` file one directory above `dist/`. The file must remain outside the public document root, must be mode `600`, and is never copied into `dist` by the build. Real process environment variables take precedence over values in the file.
+
 Obtain merchant credentials through the official Kadi merchant account or support channel. Use only Kadi-provided sandbox credentials and endpoints for end-to-end testing, and verify that the environment cannot create real charges. For production, replace only the server environment values with the approved live configuration and perform a controlled low-value check.
 
 The integration returns only a transaction identifier, status and safe message. It does not return the merchant key, upstream payload, phone number, stack trace or confidential endpoint details. Rate-limit records contain hashed identifiers and timestamps only.

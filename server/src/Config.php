@@ -35,6 +35,11 @@ final readonly class Config
 
     public static function fromEnvironment(): self
     {
+        EnvironmentLoader::loadFirstExisting([
+            dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . '.env',
+            dirname(__DIR__, 3) . DIRECTORY_SEPARATOR . '.env',
+        ]);
+
         $baseUrl = rtrim(trim((string) (getenv('KADI_BASE_URL') ?: 'https://kadi.pulsetikafrica.com')), '/');
         $frontendUrl = trim((string) (getenv('COFFEE_FRONTEND_URL') ?: ''));
 
