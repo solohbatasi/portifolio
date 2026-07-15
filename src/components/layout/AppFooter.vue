@@ -1,6 +1,7 @@
 <script setup>
 import { ArrowUpRight } from 'lucide-vue-next'
 import AppContainer from '../common/AppContainer.vue'
+import BrandLogo from '../common/BrandLogo.vue'
 import { profile } from '../../data/profile'
 
 const currentYear = new Date().getFullYear()
@@ -10,12 +11,13 @@ const currentYear = new Date().getFullYear()
   <footer class="site-footer">
     <AppContainer class="site-footer__inner">
       <div class="site-footer__brand">
-        <RouterLink
-          to="/"
-          class="footer-name"
-        >
-          {{ profile.name }}
-        </RouterLink>
+        <BrandLogo
+          variant="lockup"
+          size="large"
+          show-tagline
+          linked
+          loading="lazy"
+        />
         <p class="footer-summary">
           {{ profile.footerSummary }}
         </p>
@@ -47,7 +49,7 @@ const currentYear = new Date().getFullYear()
             aria-hidden="true"
           />
         </a>
-        <p>© {{ currentYear }} {{ profile.name }}</p>
+        <p>© {{ currentYear }} {{ profile.name }}. All rights reserved.</p>
       </div>
     </AppContainer>
   </footer>

@@ -9,6 +9,8 @@ import './styles/main.css'
 initializeTheme()
 
 const siteUrl = getPublicSiteUrl()
+const basePath = import.meta.env.BASE_URL.replace(/^\/+|\/+$/g, '')
+const logoUrl = `${siteUrl}${basePath ? `/${basePath}` : ''}${profile.brand.signaturePath}`
 setStructuredData('person', {
   '@context': 'https://schema.org',
   '@type': 'Person',
@@ -17,6 +19,8 @@ setStructuredData('person', {
   url: siteUrl,
   jobTitle: profile.primaryTitle,
   description: profile.professionalSummary,
+  logo: logoUrl,
+  image: logoUrl,
   alumniOf: {
     '@type': 'CollegeOrUniversity',
     name: 'Chuka University',

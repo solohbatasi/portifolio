@@ -4,8 +4,8 @@ import { nextTick, onBeforeUnmount, ref, watch } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import AppButton from '../common/AppButton.vue'
 import AppContainer from '../common/AppContainer.vue'
+import BrandLogo from '../common/BrandLogo.vue'
 import ThemeToggle from '../common/ThemeToggle.vue'
-import { profile } from '../../data/profile'
 
 const route = useRoute()
 const isMenuOpen = ref(false)
@@ -62,20 +62,12 @@ onBeforeUnmount(() => {
 <template>
   <header class="site-header">
     <AppContainer class="site-header__inner">
-      <RouterLink
-        to="/"
-        class="wordmark"
-        aria-label="Solomon Batasi, home"
-      >
-        <span
-          class="wordmark__mark"
-          aria-hidden="true"
-        >SB</span>
-        <span class="wordmark__text">
-          <strong>{{ profile.name }}</strong>
-          <small>{{ profile.shortTitle }}</small>
-        </span>
-      </RouterLink>
+      <BrandLogo
+        variant="signature"
+        size="small"
+        linked
+        loading="eager"
+      />
 
       <nav
         class="desktop-nav"

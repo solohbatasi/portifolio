@@ -4,15 +4,20 @@ export const profile = {
     publicUrl: null, // TODO: Set the verified production URL or VITE_PUBLIC_SITE_URL at deploy time.
     locale: 'en_KE',
   },
+  brand: {
+    signaturePath: '/brand/solomon-batasi-signature.svg',
+    lockupPath: '/brand/solomon-batasi-lock.svg',
+    tagline: 'Building Solutions. Creating Impact.',
+  },
   primaryTitle: 'Full-Stack Software Engineer & Solutions Architect',
   metadataTitle: 'Laravel, Vue.js, APIs and Enterprise Systems Engineer',
   shortTitle: 'Full-Stack Engineer',
   heroHeadline:
-    'Building reliable digital systems for businesses, institutions and public-sector organisations.',
+    '',
   heroSupportingText:
-    'I design and develop secure, scalable platforms using Laravel, Vue.js, PostgreSQL and modern API architectures. My work spans payment systems, education platforms, utility billing, institutional management and production deployment.',
+    'I design and develop secure, scalable platforms using modern frameworks, tools and API architectures. My work spans payment systems, enterprise grade platforms, utility billing, institutional management and production deployment with support.',
   professionalSummary:
-    'Solomon is an Applied Computer Science graduate and full-stack software engineer experienced in taking systems from requirements and database design through frontend development, backend architecture, external integrations, deployment and production support.',
+    'I\'m a full-stack software engineer experienced in taking systems from requirements and database design through frontend development, backend architecture, external integrations, deployment and production support.',
   company: {
     name: 'JavaPA Ltd',
     url: null, // TODO: Add the verified company URL when available.

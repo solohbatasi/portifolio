@@ -3,7 +3,7 @@ import { resolve } from 'node:path'
 
 const dist = resolve('dist')
 const publicDirectory = resolve('backend/public')
-const copiedDirectories = ['assets', 'documents', 'images']
+const copiedDirectories = ['assets', 'brand', 'documents', 'images']
 const copiedFiles = ['favicon.svg', 'robots.txt', 'sitemap.xml']
 
 await mkdir(publicDirectory, { recursive: true })

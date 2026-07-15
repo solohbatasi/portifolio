@@ -17,6 +17,7 @@
 /node_modules
 /public/build
 /public/assets
+/public/brand
 /public/documents
 /public/images
 /public/portfolio.html
