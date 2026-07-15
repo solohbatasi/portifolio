@@ -37,9 +37,9 @@ export const profile = {
   },
   support: {
     description:
-      'If my work, projects or technical resources have helped you, you can support what I am building through a secure M-Pesa payment powered by Kadi.',
+      'If my projects or technical work have helped you, you can support what I am building through a secure M-PESA payment.',
     currency: 'KES',
-    endpoint: '/api/support/coffee',
+    endpoint: '/api/coffee-payments',
     presetAmounts: [100, 250, 500, 1000],
     minimumAmount: 50,
     maximumAmount: 10000,

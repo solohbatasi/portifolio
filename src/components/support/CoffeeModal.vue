@@ -175,7 +175,7 @@ onBeforeUnmount(() => {
             :error="localErrors.amount || payment.fieldErrors.value.amount?.[0] || ''"
           />
 
-          <label for="coffee-phone">M-Pesa phone number</label>
+          <label for="coffee-phone">M-PESA phone number</label>
           <input
             id="coffee-phone"
             v-model.trim="phone"
@@ -187,7 +187,7 @@ onBeforeUnmount(() => {
             :aria-invalid="Boolean(localErrors.phone || payment.fieldErrors.value.phone)"
             :aria-describedby="localErrors.phone || payment.fieldErrors.value.phone ? 'coffee-phone-error' : 'coffee-phone-help'"
           >
-          <small id="coffee-phone-help">Your number is used only to send the M-Pesa payment prompt.</small>
+          <small id="coffee-phone-help">Your number is used only to send the M-PESA payment prompt.</small>
           <small
             v-if="localErrors.phone || payment.fieldErrors.value.phone"
             id="coffee-phone-error"

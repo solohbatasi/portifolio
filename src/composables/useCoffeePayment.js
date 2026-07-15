@@ -24,7 +24,7 @@ export function useCoffeePayment(dependencies = {}) {
   const state = ref('form')
   const message = ref('')
   const fieldErrors = ref({})
-  const transactionId = ref(null)
+  const paymentId = ref(null)
   const requestId = ref(null)
   const submitting = ref(false)
   let pollTimer = null
@@ -50,7 +50,7 @@ export function useCoffeePayment(dependencies = {}) {
   }
 
   async function poll() {
-    if (!transactionId.value || TERMINAL_STATUSES.has(state.value)) return
+    if (!paymentId.value || TERMINAL_STATUSES.has(state.value)) return
     if (Date.now() - pollStartedAt >= POLL_TIMEOUT) {
       state.value = 'timeout'
       message.value = 'Payment confirmation timed out. Check your M-Pesa messages before trying again.'
@@ -60,7 +60,7 @@ export function useCoffeePayment(dependencies = {}) {
 
     requestController = new AbortController()
     try {
-      const result = await statusRequest(transactionId.value, { signal: requestController.signal })
+      const result = await statusRequest(paymentId.value, { signal: requestController.signal })
       const nextStatus = typeof result.status === 'string' ? result.status.toLowerCase() : 'processing'
       state.value = nextStatus === 'pending' ? 'prompt-sent' : nextStatus
       message.value = typeof result.message === 'string' ? result.message : ''
@@ -68,7 +68,7 @@ export function useCoffeePayment(dependencies = {}) {
       else schedulePoll()
     } catch (error) {
       if (error.name !== 'AbortError') {
-        state.value = 'processing'
+        state.value = 'status-unavailable'
         message.value = 'Payment confirmation is taking longer than expected. We are checking again.'
         schedulePoll()
       }
@@ -89,10 +89,10 @@ export function useCoffeePayment(dependencies = {}) {
         { phone: payload.phone, amount: payload.amount, request_id: requestId.value },
         { signal: requestController.signal },
       )
-      if (typeof result.transaction_id !== 'string' || !result.transaction_id) {
-        throw new Error('Missing transaction identifier')
+      if (typeof result.payment_id !== 'string' || !result.payment_id) {
+        throw new Error('Missing payment identifier')
       }
-      transactionId.value = result.transaction_id
+      paymentId.value = result.payment_id
       const initialStatus = typeof result.status === 'string' ? result.status.toLowerCase() : 'pending'
       state.value = TERMINAL_STATUSES.has(initialStatus)
         ? initialStatus
@@ -122,7 +122,7 @@ export function useCoffeePayment(dependencies = {}) {
     state.value = 'form'
     message.value = ''
     fieldErrors.value = {}
-    transactionId.value = null
+    paymentId.value = null
     requestId.value = null
     pollStartedAt = 0
   }
@@ -139,6 +139,6 @@ export function useCoffeePayment(dependencies = {}) {
     state,
     stop,
     submitting,
-    transactionId,
+    paymentId,
   }
 }

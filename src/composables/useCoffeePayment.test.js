@@ -30,7 +30,7 @@ afterEach(() => {
 
 describe('useCoffeePayment', () => {
   it('submits the expected payload and enters the prompt-sent state', async () => {
-    const initiate = vi.fn().mockResolvedValue({ transaction_id: 'txn_1234', status: 'pending' })
+    const initiate = vi.fn().mockResolvedValue({ payment_id: 'txn_1234', status: 'pending' })
     const { payment, wrapper } = mountPayment({ initiate, status: vi.fn() })
 
     await payment.initiate({ phone: '0712345678', amount: 250 })
@@ -54,7 +54,7 @@ describe('useCoffeePayment', () => {
 
     expect(second).toBe(false)
     expect(initiate).toHaveBeenCalledOnce()
-    resolveRequest({ transaction_id: 'txn_1234', status: 'pending' })
+    resolveRequest({ payment_id: 'txn_1234', status: 'pending' })
     await first
     wrapper.unmount()
   })
@@ -62,7 +62,7 @@ describe('useCoffeePayment', () => {
   it('reuses its UUID after a temporary initiation failure', async () => {
     const initiate = vi.fn()
       .mockRejectedValueOnce(new TypeError('offline'))
-      .mockResolvedValueOnce({ transaction_id: 'txn_1234', status: 'pending' })
+      .mockResolvedValueOnce({ payment_id: 'txn_1234', status: 'pending' })
     const { payment, wrapper } = mountPayment({ initiate, status: vi.fn() })
 
     await payment.initiate({ phone: '0712345678', amount: 100 })
@@ -76,7 +76,7 @@ describe('useCoffeePayment', () => {
   it('polls to success and cleans up the timer', async () => {
     const status = vi.fn().mockResolvedValue({ status: 'success', message: 'Paid' })
     const { payment, wrapper } = mountPayment({
-      initiate: vi.fn().mockResolvedValue({ transaction_id: 'txn_1234', status: 'pending' }),
+      initiate: vi.fn().mockResolvedValue({ payment_id: 'txn_1234', status: 'pending' }),
       status,
     })
     await payment.initiate({ phone: '0712345678', amount: 100 })
@@ -92,7 +92,7 @@ describe('useCoffeePayment', () => {
 
   it.each(['cancelled', 'failed', 'reversed', 'timeout'])('handles the %s terminal state', async (terminalState) => {
     const { payment, wrapper } = mountPayment({
-      initiate: vi.fn().mockResolvedValue({ transaction_id: 'txn_1234', status: 'pending' }),
+      initiate: vi.fn().mockResolvedValue({ payment_id: 'txn_1234', status: 'pending' }),
       status: vi.fn().mockResolvedValue({ status: terminalState, message: 'Safe provider message' }),
     })
     await payment.initiate({ phone: '0712345678', amount: 100 })
@@ -105,14 +105,16 @@ describe('useCoffeePayment', () => {
   })
 
   it('retries a temporary status failure without creating a second STK push', async () => {
-    const initiate = vi.fn().mockResolvedValue({ transaction_id: 'txn_1234', status: 'pending' })
+    const initiate = vi.fn().mockResolvedValue({ payment_id: 'txn_1234', status: 'pending' })
     const status = vi.fn()
       .mockRejectedValueOnce(new TypeError('offline'))
       .mockResolvedValueOnce({ status: 'success' })
     const { payment, wrapper } = mountPayment({ initiate, status })
     await payment.initiate({ phone: '0712345678', amount: 100 })
 
-    await vi.advanceTimersByTimeAsync(8000)
+    await vi.advanceTimersByTimeAsync(4000)
+    expect(payment.state.value).toBe('status-unavailable')
+    await vi.advanceTimersByTimeAsync(4000)
 
     expect(initiate).toHaveBeenCalledOnce()
     expect(status).toHaveBeenCalledTimes(2)
@@ -123,7 +125,7 @@ describe('useCoffeePayment', () => {
   it('cleans polling up when the component unmounts', async () => {
     const status = vi.fn().mockResolvedValue({ status: 'processing' })
     const { payment, wrapper } = mountPayment({
-      initiate: vi.fn().mockResolvedValue({ transaction_id: 'txn_1234', status: 'pending' }),
+      initiate: vi.fn().mockResolvedValue({ payment_id: 'txn_1234', status: 'pending' }),
       status,
     })
     await payment.initiate({ phone: '0712345678', amount: 100 })
@@ -135,7 +137,7 @@ describe('useCoffeePayment', () => {
   it('stops with a safe timeout after the overall polling window', async () => {
     const status = vi.fn().mockResolvedValue({ status: 'processing' })
     const { payment, wrapper } = mountPayment({
-      initiate: vi.fn().mockResolvedValue({ transaction_id: 'txn_1234', status: 'pending' }),
+      initiate: vi.fn().mockResolvedValue({ payment_id: 'txn_1234', status: 'pending' }),
       status,
     })
     await payment.initiate({ phone: '0712345678', amount: 100 })

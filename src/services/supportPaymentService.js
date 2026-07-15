@@ -25,8 +25,8 @@ export async function initiateCoffeePayment(payload, options = {}) {
   return readResponse(response)
 }
 
-export async function fetchCoffeePaymentStatus(transactionId, options = {}) {
-  const response = await fetch(`${supportEndpoint}/${encodeURIComponent(transactionId)}`, {
+export async function fetchCoffeePaymentStatus(paymentId, options = {}) {
+  const response = await fetch(`${supportEndpoint}/${encodeURIComponent(paymentId)}`, {
     headers: { Accept: 'application/json' },
     signal: options.signal,
   })

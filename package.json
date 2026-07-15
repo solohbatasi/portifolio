@@ -5,11 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/generate-seo.mjs && vite build && node scripts/copy-server.mjs",
+    "build": "node scripts/generate-seo.mjs && vite build && node scripts/publish-frontend-to-laravel.mjs",
     "preview": "vite preview",
     "lint": "eslint .",
     "test": "vitest run",
-    "test:php": "php server/tests/run.php"
+    "test:backend": "composer --working-dir=backend test"
   },
   "dependencies": {
     "lucide-vue-next": "^0.468.0",

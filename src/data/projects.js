@@ -9,7 +9,7 @@ export const projects = [
     fullDescription:
       'A developer-focused payment platform for initiating and tracking M-Pesa payments, managing merchant wallets, processing commissions, delivering webhooks and supporting payment links, invoices and payouts.',
     role: 'Lead Full-Stack Software Engineer',
-    status: 'Production-readiness stage',
+    status: 'Live production platform',
     repositoryVisibility: 'Private commercial project',
     technologies: [
       'Laravel',
@@ -77,10 +77,10 @@ export const projects = [
     solution:
       'Designed a Laravel and PostgreSQL platform with idempotent payment initiation, immutable ledger records, authenticated APIs, signed webhooks and operational reconciliation workflows.',
     outcome:
-      'The platform is at the production-readiness stage, with core collection, wallet, webhook, payment-link, invoice and payout workflows implemented.',
+      'The live platform provides collection, wallet, webhook, payment-link, invoice and payout workflows for production use.',
     image: null,
     gallery: [],
-    liveUrl: null,
+    liveUrl: 'https://kadi.pulsetikafrica.com',
     repositoryUrl: null,
     featured: true,
     sortOrder: 1,

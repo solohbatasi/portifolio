@@ -7,7 +7,7 @@ import * as paymentService from '../../services/supportPaymentService'
 beforeEach(() => {
   document.body.innerHTML = ''
   vi.spyOn(paymentService, 'initiateCoffeePayment').mockResolvedValue({
-    transaction_id: 'txn_1234',
+    payment_id: 'txn_1234',
     status: 'pending',
     message: 'Prompt sent',
   })

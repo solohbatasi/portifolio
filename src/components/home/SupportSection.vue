@@ -40,7 +40,7 @@ async function closeModal() {
             <ShieldCheck
               :size="17"
               aria-hidden="true"
-            />Secure M-Pesa payments powered by Kadi.
+            />Pay securely via M-PESA.
           </li>
           <li>
             <CreditCard

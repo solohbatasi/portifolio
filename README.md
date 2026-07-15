@@ -1,248 +1,224 @@
 # Solomon Batasi Software Engineering Portfolio
 
-## 1. Project overview
+## Overview and architecture
 
-A responsive portfolio for Solomon Batasi, a Full-Stack Software Engineer and Solutions Architect. The presentation and case studies remain static and data-driven. A deliberately small PHP endpoint provides the only server-side capability: optional M-Pesa coffee contributions through Kadi.
+A Vue 3 portfolio for Solomon Batasi with a narrowly scoped Laravel API for direct Safaricom Daraja M-PESA coffee payments.
 
-## 2. Technology stack
+```text
+Vue browser application
+  -> POST /api/coffee-payments
+  -> Laravel API and coffee_payments database
+  -> Safaricom Daraja OAuth and STK Push
 
-- Vue 3 Composition API
-- Vite
-- JavaScript
-- Vue Router in HTML5 history mode
-- Tailwind CSS and project CSS variables
-- `lucide-vue-next` icons
-- A dependency-free PHP 8.2+ integration layer for Kadi
+Safaricom callback
+  -> POST /api/mpesa/stk/callback
+  -> Laravel updates the local payment
+  -> Vue polls GET /api/coffee-payments/{public_id}
+```
 
-## 3. Requirements
+Kadi remains an independent featured portfolio case study. It is not part of the coffee-payment flow.
 
-- Node.js 20 or newer
-- npm
-- PHP 8.2 or newer with cURL, JSON and OpenSSL for coffee payments
-- Apache with `mod_rewrite` for cPanel history-mode and API routes
+## Technology stack and requirements
 
-## 4. Installation
+- Vue 3, Vite, Vue Router, Tailwind CSS and `lucide-vue-next`
+- Laravel 13 with its HTTP client, cache, scheduler and Eloquent
+- PHP 8.3+, Composer, Node.js 20+ and npm
+- MySQL or MariaDB in production
+- Apache `mod_rewrite` for cPanel
+- HTTPS for the portfolio and Daraja callback
+
+## Installation and development
 
 ```bash
 npm install
-```
-
-Copy `.env.example` to `.env` when deployment-specific values are needed. Environment files are ignored by Git.
-
-## 5. Development command
-
-```bash
+composer install --working-dir=backend
+cp .env.example .env
+cp backend/.env.example backend/.env
+php backend/artisan key:generate
+php backend/artisan migrate
 npm run dev
+php backend/artisan serve
 ```
 
-## 6. Production build
+Use only Safaricom-provided sandbox credentials locally. The Vue app contains no Daraja credentials.
+
+## Tests and production build
 
 ```bash
 npm run lint
-npm run build
-```
-
-The deployable application is generated in `dist/`. The build generates SEO files and copies the production PHP runtime to `dist/api/`; tests are not copied. A real `VITE_PUBLIC_SITE_URL` is required for absolute production sitemap entries.
-
-Run the mocked server integration tests with:
-
-```bash
 npm test
-npm run test:php
-```
-
-The frontend suite covers the support modal, validation, idempotency lifecycle and status polling. The PHP tests use a fake transport. Neither suite contacts Kadi or initiates a real payment.
-
-## 7. Project structure
-
-```text
-src/
-  components/       Reusable common, layout, home and project components
-  composables/       Theme and reveal behavior
-  data/              Editable profile, project, skill and experience content
-  pages/             Route-level pages
-  router/            Vue Router history configuration
-  styles/            Global design system and responsive styles
-  utils/             SEO and public-asset helpers
-public/
-  documents/         Downloadable public documents
-  images/projects/   Approved project screenshots
-  .htaccess          Apache history-mode fallback
-scripts/             Build-time SEO generation
-server/
-  api/               Apache/PHP request entry point
-  src/               Validation, Kadi client and rate limiting
-  tests/             Mocked integration test runner
-```
-
-## 8. Editing profile information
-
-Edit `src/data/profile.js`. Contact fields that are not yet approved remain `null`; components will not render empty links.
-
-## 9. Adding a new project
-
-Add one object to `src/data/projects.js` using the existing project schema. Each project needs a unique `id`, `slug` and `sortOrder`. Keep status, repository visibility, architecture and outcome wording accurate. The shared `/projects/:slug` page renders every entry automatically.
-
-Run lint and build after editing project data.
-
-## 10. Adding project screenshots
-
-Place approved, optimized images in:
-
-```text
-public/images/projects/
-```
-
-Reference them without a leading slash so root and subdirectory builds both work:
-
-```js
-image: 'images/projects/kadi-overview.webp',
-imageWidth: 1600,
-imageHeight: 900,
-gallery: [
-  {
-    src: 'images/projects/kadi-payment-flow.webp',
-    alt: 'Kadi payment workflow interface with demonstration data',
-    width: 1600,
-    height: 900,
-    caption: 'Payment operations workflow',
-  },
-],
-```
-
-Use WebP or AVIF where practical. Remove or replace personal, financial, credential and confidential client data before committing an image.
-
-## 11. Adding a downloadable CV
-
-Place the approved document in `public/documents/`, for example:
-
-```text
-public/documents/solomon-batasi-cv.pdf
-```
-
-Then set the following in `src/data/profile.js`:
-
-```js
-cvPath: 'documents/solomon-batasi-cv.pdf',
-```
-
-The CV button is hidden while `cvPath` is `null`.
-
-## 12. Configuring contact information
-
-Update the `contact` object in `src/data/profile.js`. Only add verified public details. Email, LinkedIn and WhatsApp controls are rendered only when their values are present.
-
-Never add credentials, private API endpoints or confidential contact data to the frontend.
-
-## 13. Dark and light mode
-
-The theme toggle stores the visitor preference in `localStorage`. With no stored preference, the site follows `prefers-color-scheme`. An inline startup script applies the initial theme before the application loads to reduce theme flashing.
-
-## 14. cPanel deployment
-
-### Root domain
-
-Use these production variables:
-
-```env
-VITE_PUBLIC_SITE_URL=https://your-verified-domain.example
-VITE_BASE_PATH=/
-```
-
-Run `npm run build`. Open cPanel File Manager, enter `public_html`, and upload the **contents** of `dist/`—not the `dist` folder itself. Enable “Show Hidden Files” and confirm that `.htaccess` is uploaded alongside `index.html`.
-
-Expected root layout:
-
-```text
-public_html/
-  .htaccess
-  index.html
-  assets/
-  images/
-  documents/
-  robots.txt
-  sitemap.xml
-```
-
-### Subdirectory
-
-For a deployment such as `https://your-verified-domain.example/portfolio/`:
-
-```env
-VITE_PUBLIC_SITE_URL=https://your-verified-domain.example/portfolio
-VITE_BASE_PATH=/portfolio/
-```
-
-Rebuild, create `public_html/portfolio`, and upload the contents of `dist/` into that directory. The directory-relative `.htaccess` fallback supports direct requests such as `/portfolio/projects/kadi-payment-gateway`.
-
-If direct routes return Apache 404 responses, confirm that `.htaccess` was uploaded, `mod_rewrite` is enabled, and the hosting account permits rewrite overrides.
-
-### Updating and rebuilding
-
-After changing data, screenshots, the CV or environment configuration:
-
-```bash
-npm run lint
+npm run test:backend
+composer exec --working-dir=backend pint -- --test
 npm run build
 ```
 
-Replace the deployed files with the newly generated `dist` contents. Do not upload `src`, `node_modules` or `.env` to `public_html`.
+Laravel tests use `Http::fake()` and never contact Safaricom. The build creates the normal static `dist/` output and publishes the same compiled assets to `backend/public/portfolio.html` so Laravel and Vue can share one production origin.
 
-## 15. Other deployment platforms
+## Project structure
 
-### Vercel
+```text
+src/                         Vue portfolio and coffee-payment modal
+backend/
+  app/Enums/                 Controlled payment states
+  app/Http/                  API validation and controllers
+  app/Models/                Encrypted CoffeePayment model
+  app/Services/              OAuth, STK, callback and reconciliation logic
+  app/Support/               Phone and result-code utilities
+  database/migrations/       coffee_payments schema
+  routes/api.php             Public portfolio-owned API
+  tests/                     Mocked Daraja tests
+public/                      Source images and documents
+scripts/                     SEO and Vue-to-Laravel publishing scripts
+dist/                        Standalone Vue build artifact
+```
 
-- Build command: `npm run build`
-- Output directory: `dist`
-- Configure `VITE_PUBLIC_SITE_URL` and keep `VITE_BASE_PATH=/`
-- `vercel.json` provides the history-mode fallback
+## Editing portfolio content
 
-### Netlify
+- Edit personal information and safe contact configuration in `src/data/profile.js`.
+- Add projects to `src/data/projects.js` using the existing schema.
+- Put approved screenshots in `public/images/projects/` and use demonstration data only.
+- Put an approved CV in `public/documents/`, then set `profile.contact.cvPath`.
+- Never publish confidential screenshots, credentials, private endpoints or repository URLs.
 
-- Build command: `npm run build`
-- Publish directory: `dist`
-- Configure `VITE_PUBLIC_SITE_URL` and use `VITE_BASE_PATH=/` for a normal root deployment
-- `public/_redirects` is copied to `dist` and provides the SPA fallback
+## Daraja configuration
 
-### Cloudflare Pages
-
-- Framework preset: Vue or Vite
-- Build command: `npm run build`
-- Build output directory: `dist`
-- Configure `VITE_PUBLIC_SITE_URL` and use `VITE_BASE_PATH=/` for a normal root deployment
-- The `_redirects` file provides the Pages history fallback
-
-## 16. Kadi coffee integration
-
-The browser calls only Solomon's own `/api/support/coffee` endpoint. PHP validates and normalises the Kenyan phone number, checks whole-number amount limits, applies rate limits, creates a non-personal reference and forwards the request to Kadi over HTTPS. A caller-generated UUID becomes a stable idempotency key so an accidental retry does not intentionally create a new payment. The browser polls the same-origin transaction-status endpoint until Kadi reports a terminal state.
-
-Configure these as **server environment variables** through cPanel or the hosting provider's Apache/PHP controls. They must never use a `VITE_` prefix:
+Copy `backend/.env.example` to `backend/.env`. Configure values only in the Laravel environment:
 
 ```env
-KADI_BASE_URL=https://kadi.pulsetikafrica.com
-KADI_SECRET_KEY=
+APP_ENV=production
+APP_DEBUG=false
+APP_URL=https://portfolio-domain.example
+APP_TIMEZONE=Africa/Nairobi
+
+DARAJA_ENVIRONMENT=production
+DARAJA_BASE_URL=https://api.safaricom.co.ke
+DARAJA_CONSUMER_KEY=
+DARAJA_CONSUMER_SECRET=
+DARAJA_SHORTCODE=
+DARAJA_PASSKEY=
+DARAJA_TRANSACTION_TYPE=CustomerPayBillOnline
+DARAJA_CALLBACK_URL=https://portfolio-domain.example/api/mpesa/stk/callback
+
 COFFEE_MIN_AMOUNT=50
 COFFEE_MAX_AMOUNT=10000
-COFFEE_FRONTEND_URL=https://your-verified-domain.example
-COFFEE_RATE_LIMIT_DIR=/a/private/writable/path/coffee-rate-limits
+COFFEE_PRESET_AMOUNTS=100,250,500,1000
+COFFEE_ACCOUNT_REFERENCE=SOLOMON-PORTFOLIO
+COFFEE_TRANSACTION_DESCRIPTION="Support Solomon Batasi"
+PORTFOLIO_FRONTEND_URL=https://portfolio-domain.example
 ```
 
-Use a writable rate-limit directory outside `public_html` where the host permits it. If cPanel does not expose environment configuration, ask the provider to set it; do not create a secret-bearing file in the website. For a subdirectory deployment, set `COFFEE_FRONTEND_URL` to the complete subdirectory URL. The API derives the deployment prefix from its script path.
+Use `CustomerPayBillOnline` for a PayBill and `CustomerBuyGoodsOnline` for a Till. Configure this explicitly; never infer it from the shortcode.
 
-On cPanel deployments where the domain document root is the generated `dist/` directory, the PHP runtime can also read the project-root `.env` file one directory above `dist/`. The file must remain outside the public document root, must be mode `600`, and is never copied into `dist` by the build. Real process environment variables take precedence over values in the file.
+The consumer key, consumer secret, shortcode, passkey, OAuth token and generated password are server-only. Never add them to `VITE_` variables, Vue code, public files, logs, test fixtures or documentation.
 
-Obtain merchant credentials through the official Kadi merchant account or support channel. Use only Kadi-provided sandbox credentials and endpoints for end-to-end testing, and verify that the environment cannot create real charges. For production, replace only the server environment values with the approved live configuration and perform a controlled low-value check.
+## Callback and reconciliation
 
-The integration returns only a transaction identifier, status and safe message. It does not return the merchant key, upstream payload, phone number, stack trace or confidential endpoint details. Rate-limit records contain hashed identifiers and timestamps only.
+Register this exact public HTTPS callback in the Daraja production application:
 
-The `dist/api/` directory must be uploaded with the rest of `dist`. Vercel, Netlify and Cloudflare Pages do not execute this bundled PHP endpoint; those targets need an equivalent protected server function before the coffee form is used. Never move the key into Vue as a workaround.
+```text
+https://portfolio-domain.example/api/mpesa/stk/callback
+```
 
-## 17. Security and confidentiality reminders
+The callback stores only required fields, matches by the stored CheckoutRequestID, parses metadata by `Name`, verifies the returned amount and handles duplicate callbacks idempotently. The public API never returns internal Daraja identifiers or receipts.
 
-- All `VITE_` variables are embedded in public frontend files. Never store secrets, tokens or private API keys in them.
-- `KADI_SECRET_KEY` is server-only. Never place it in Vue code, `public/`, screenshots, logs, responses or a `VITE_` variable.
-- Keep `.env` files out of version control; only `.env.example` should be committed.
-- Never commit real credentials, internal production URLs or private API endpoints.
-- Do not publish confidential client, financial, learner, government or operational screenshots.
-- Use demonstration data in screenshots and verify image metadata before publication.
-- Do not add private repository URLs or imply that confidential code is publicly available.
+Pending transactions are queried only after the configured delay. Run reconciliation manually with:
+
+```bash
+php artisan coffee-payments:reconcile
+```
+
+Configure the cPanel cron scheduler once per minute:
+
+```cron
+* * * * * cd /home/ACCOUNT/portifolio/backend && php artisan schedule:run >> /dev/null 2>&1
+```
+
+## Local sandbox testing
+
+1. Use a separate sandbox database and a generated `APP_KEY`.
+2. Set the Safaricom sandbox base URL and sandbox-only credentials in `backend/.env`.
+3. Use an HTTPS tunnel for the callback and register its exact URL.
+4. Run migrations, clear configuration, and start Laravel.
+5. Initiate only documented sandbox requests and verify pending, success, cancellation and timeout handling.
+6. Never put sandbox credentials into frontend environment variables.
+
+## cPanel deployment
+
+Use one document root so API callbacks and the Vue application share the same HTTPS origin.
+
+1. Upload the repository outside the public document root.
+2. Set the subdomain document root to `/home/ACCOUNT/portifolio/backend/public`.
+3. Create `backend/.env` with mode `600`; never use the root Vue `.env` for Daraja secrets.
+4. Configure a production database and generate `APP_KEY` once.
+5. Install optimized PHP dependencies:
+
+```bash
+composer install --working-dir=backend --no-dev --optimize-autoloader
+```
+
+6. Build and publish Vue assets:
+
+```bash
+npm ci
+npm run build
+```
+
+7. Complete Laravel deployment checks:
+
+```bash
+cd backend
+php artisan migrate --force
+php artisan optimize:clear
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+php artisan about --only=environment
+```
+
+8. Ensure `backend/storage` and `backend/bootstrap/cache` are writable.
+9. Configure the scheduler cron command shown above.
+
+The Laravel `public/.htaccess` routes `/api` to Laravel and returns `portfolio.html` for Vue Router paths. Do not point the domain to the repository root, `dist`, or `backend` itself.
+
+Static-only hosts such as Vercel, Netlify and Cloudflare Pages cannot run this Laravel API without a separately hosted backend and proxy configuration.
+
+## Credential rotation
+
+1. Create or obtain the replacement Daraja credential through Safaricom.
+2. Update only `backend/.env` or the hosting secret manager.
+3. Run `php artisan optimize:clear` followed by `php artisan config:cache`.
+4. Perform a controlled low-value verification.
+5. Revoke the previous credential after successful verification.
+6. Never print either credential in terminal output or application logs.
+
+## Secret verification
+
+After building, scan the public bundles:
+
+```bash
+rg -n "DARAJA_|Authorization|api\.safaricom\.co\.ke|KADI_SECRET_KEY|pay_sk_" dist/assets backend/public/assets
+```
+
+No match should reveal a credential, authorization header or direct Daraja call. Configuration names may exist only in Laravel source and placeholder environment documentation.
+
+## Production checklist
+
+- Production consumer key and consumer secret configured server-side
+- Production shortcode and passkey configured server-side
+- Correct PayBill or Till transaction type configured
+- HTTPS callback URL registered exactly in Daraja
+- `APP_TIMEZONE=Africa/Nairobi`
+- Production database migrated
+- Laravel configuration cache rebuilt after environment changes
+- Scheduler cron enabled
+- Storage and logs writable
+- Initiation, phone and status rate limits active
+- `APP_DEBUG=false`
+- Vue production build published to `backend/public`
+- No credentials in frontend bundles
+- Controlled low-value payment completed manually
+- Successful callback, cancellation, timeout and delayed callback reviewed
+
+## Manual live-payment verification
+
+Use an authorised Kenyan number and the configured minimum amount. Confirm one STK prompt, enter the PIN only in the phone's M-PESA interface, verify that the portfolio remains pending until callback/query confirmation, confirm one database record for the request UUID, and review masked logs. Test cancellation separately. Never automate a real payment in the test suite.

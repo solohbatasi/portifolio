@@ -10,6 +10,7 @@ const content = {
   initiating: { title: 'Sending the payment request…', icon: LoaderCircle },
   'prompt-sent': { title: 'Check your phone', icon: Smartphone },
   processing: { title: 'Confirming your payment', icon: LoaderCircle },
+  'status-unavailable': { title: 'Temporarily unable to check status', icon: Clock3 },
   success: { title: 'Thank you for the coffee!', icon: CheckCircle2 },
   cancelled: { title: 'Payment cancelled', icon: CircleX },
   failed: { title: 'Payment not completed', icon: CircleX },
@@ -33,7 +34,7 @@ const content = {
     />
     <h3>{{ content[state]?.title }}</h3>
     <p v-if="state === 'prompt-sent'">
-      An M-Pesa prompt has been sent to the number you provided. Enter your PIN on your phone to complete the payment.
+      An M-PESA prompt has been sent to the number you provided. Enter your M-PESA PIN securely on your phone to complete the payment.
     </p>
     <p v-else-if="state === 'success'">
       Your support helps me continue building and sharing useful software solutions.
@@ -45,7 +46,7 @@ const content = {
       v-if="state === 'prompt-sent'"
       class="payment-status__note"
     >
-      For your security, never enter your M-Pesa PIN on this website.
+      For your security, never enter your M-PESA PIN on this website.
     </p>
   </div>
 </template>
