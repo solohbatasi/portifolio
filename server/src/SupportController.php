@@ -30,9 +30,11 @@ final class SupportController
             return [422, ['message' => 'The payment details could not be accepted.', 'errors' => $errors]];
         } catch (RateLimitException $exception) {
             return [429, ['message' => $exception->getMessage()]];
-        } catch (ConnectionException|UpstreamException) {
+        } catch (ConnectionException|UpstreamException $exception) {
+            $this->recordSafeFailure('initiate', $exception);
             return [502, ['message' => 'We could not initiate the payment right now. Please try again.']];
-        } catch (Throwable) {
+        } catch (Throwable $exception) {
+            $this->recordSafeFailure('initiate', $exception);
             return [500, ['message' => 'The payment service is temporarily unavailable.']];
         }
     }
@@ -45,10 +47,28 @@ final class SupportController
             return [422, ['message' => 'The transaction identifier is invalid.', 'errors' => $exception->errors]];
         } catch (RateLimitException $exception) {
             return [429, ['message' => $exception->getMessage()]];
-        } catch (ConnectionException|UpstreamException) {
+        } catch (ConnectionException|UpstreamException $exception) {
+            $this->recordSafeFailure('status', $exception);
             return [502, ['message' => 'We could not check the payment right now. Please try again.']];
-        } catch (Throwable) {
+        } catch (Throwable $exception) {
+            $this->recordSafeFailure('status', $exception);
             return [500, ['message' => 'The payment service is temporarily unavailable.']];
         }
+    }
+
+    private function recordSafeFailure(string $operation, Throwable $exception): void
+    {
+        $statusCode = $exception instanceof UpstreamException ? $exception->statusCode : null;
+        $reasonCode = $exception instanceof ConnectionException || $exception instanceof UpstreamException
+            ? $exception->reasonCode
+            : 'internal_error';
+
+        error_log(sprintf(
+            '[portfolio-coffee] operation=%s failure=%s upstream_status=%s reason=%s',
+            $operation,
+            $exception::class,
+            $statusCode ?? 'none',
+            $reasonCode,
+        ));
     }
 }

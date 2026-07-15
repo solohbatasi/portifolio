@@ -52,7 +52,7 @@ final class KadiClient
         }
 
         if ($response->statusCode < 200 || $response->statusCode >= 300) {
-            throw new UpstreamException('The payment provider could not process the request.');
+            throw new UpstreamException('The payment provider could not process the request.', $response->statusCode, 'http_error');
         }
 
         return $response->body;

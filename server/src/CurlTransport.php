@@ -10,7 +10,7 @@ final class CurlTransport implements Transport
     {
         $handle = curl_init($url);
         if ($handle === false) {
-            throw new ConnectionException('Unable to initialise the payment connection.');
+            throw new ConnectionException('Unable to initialise the payment connection.', 'curl_init');
         }
 
         $headerLines = [];
@@ -41,12 +41,12 @@ final class CurlTransport implements Transport
         curl_close($handle);
 
         if ($rawResponse === false || $errorNumber !== 0) {
-            throw new ConnectionException('The payment provider could not be reached.');
+            throw new ConnectionException('The payment provider could not be reached.', 'curl_' . $errorNumber);
         }
 
         $decodedBody = json_decode($rawResponse, true);
         if (!is_array($decodedBody)) {
-            throw new UpstreamException('The payment provider returned an unexpected response.');
+            throw new UpstreamException('The payment provider returned an unexpected response.', $statusCode, 'invalid_json');
         }
 
         return new TransportResponse($statusCode, $decodedBody);
