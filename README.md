@@ -225,3 +225,70 @@ No match should reveal a credential, authorization header or direct Daraja call.
 ## Manual live-payment verification
 
 Use an authorised Kenyan number and the configured minimum amount. Confirm one STK prompt, enter the PIN only in the phone's M-PESA interface, verify that the portfolio remains pending until callback/query confirmation, confirm one database record for the request UUID, and review masked logs. Test cancellation separately. Never automate a real payment in the test suite.
+
+## Private administrator dashboard
+
+The private `/admin` area is rendered by Laravel and uses stateful Google OAuth through Socialite. There is no password login, registration, reset flow, API-token login or public payout endpoint. Every administrator route requires both a Laravel session and the current server-side email allowlist.
+
+```env
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+GOOGLE_REDIRECT_URI=https://portfolio-domain.example/auth/google/callback
+ADMIN_ALLOWED_EMAILS=solomonbatasi@gmail.com,batasisolomon029@gmail.com
+SESSION_SECURE_COOKIE=true
+SESSION_HTTP_ONLY=true
+SESSION_SAME_SITE=lax
+```
+
+In Google Cloud, configure the OAuth consent screen, create a Web Application client, request only `openid`, `email`, and `profile`, and register the exact redirect URI. Add both allowed addresses as test users if the OAuth application remains in testing. Google tokens are never persisted.
+
+The dashboard includes database-backed statistics, filtered coffee transactions, safe pending-payment refresh, recorded portfolio balance, optional organization-balance retrieval, and optional single-recipient B2C payouts. Recorded Portfolio Balance and M-PESA Organization Balance remain explicitly separate.
+
+### Organization Balance API
+
+Keep this disabled until Safaricom confirms Account Balance access and supplies the correct initiator and production security credential:
+
+```env
+DARAJA_BALANCE_ENABLED=false
+DARAJA_INITIATOR_NAME=
+DARAJA_SECURITY_CREDENTIAL=
+DARAJA_BALANCE_IDENTIFIER_TYPE=4
+DARAJA_BALANCE_RESULT_URL=https://portfolio-domain.example/api/mpesa/balance/result
+DARAJA_BALANCE_TIMEOUT_URL=https://portfolio-domain.example/api/mpesa/balance/timeout
+```
+
+Refresh creates a pending snapshot. Only the result callback updates the displayed organization balance.
+
+### B2C payouts
+
+Keep B2C disabled until the production application has B2C approval and Solomon confirms the shortcode, initiator, security credential, command ID, charges and transaction limits:
+
+```env
+DARAJA_B2C_ENABLED=false
+DARAJA_B2C_SHORTCODE=
+DARAJA_B2C_RESULT_URL=https://portfolio-domain.example/api/mpesa/b2c/result
+DARAJA_B2C_TIMEOUT_URL=https://portfolio-domain.example/api/mpesa/b2c/timeout
+DARAJA_B2C_COMMAND_ID=BusinessPayment
+PAYOUT_MIN_AMOUNT=10
+PAYOUT_MAX_AMOUNT=
+PAYOUT_DAILY_LIMIT=
+PAYOUT_REQUIRE_BALANCE_CHECK=true
+```
+
+Payouts are UUID-idempotent, reserve pending amounts, reject insufficient recorded balance, and remain pending until a confirmed callback. A timeout remains reserved for reconciliation because it does not prove funds were not transferred. Use only Safaricom's production security credential, never the initiator password.
+
+### Dashboard deployment and manual checks
+
+```bash
+cd /home/ACCOUNT/portifolio
+composer install --working-dir=backend --no-dev --optimize-autoloader
+php backend/artisan migrate --force
+npm ci
+npm run build
+php backend/artisan optimize:clear
+php backend/artisan optimize
+```
+
+Keep the document root at `backend/public`, HTTPS active, Laravel storage writable and the scheduler cron running. Test both allowed Google accounts plus a rejected account. Request one balance and confirm its callback. Enable B2C only after approval, then make one small controlled payout and verify its callback and transaction ID before increasing limits. Never automate a live payout.
+
+To rotate a Google or Daraja credential, replace the server-only value, revoke the old credential with its provider, then run `php artisan optimize:clear && php artisan config:cache`. Never commit `.env`, credentials, raw callbacks, or unmasked phone numbers.

@@ -25,5 +25,6 @@ class AppServiceProvider extends ServiceProvider
         RateLimiter::for('coffee-initiate', fn (Request $request) => Limit::perMinutes(10, 5)->by('coffee-ip:'.$request->ip()));
         RateLimiter::for('coffee-status', fn (Request $request) => Limit::perMinute(30)->by('coffee-status:'.$request->ip().':'.$request->route('payment')));
         RateLimiter::for('daraja-callback', fn (Request $request) => Limit::perMinute(300)->by('daraja-callback:'.$request->ip()));
+        RateLimiter::for('admin-sensitive', fn (Request $request) => Limit::perMinute(5)->by('admin:'.($request->user()?->id ?? $request->ip())));
     }
 }

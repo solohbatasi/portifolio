@@ -251,6 +251,24 @@ button {
   gap: 0.5rem;
 }
 
+.coffee-header-action {
+  display: inline-flex;
+  min-width: 2.75rem;
+  min-height: 2.4rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border: 1px solid color-mix(in srgb, #14b8a6 65%, #334155);
+  border-radius: 0.3rem;
+  background: #14b8a6;
+  color: #032b28;
+  padding: 0.55rem 0.7rem;
+  font-weight: 750;
+}
+
+.coffee-header-action span { display: none; }
+.coffee-header-action:hover { background: #2dd4bf; }
+
 .icon-button {
   display: inline-grid;
   width: 2.5rem;
@@ -273,7 +291,13 @@ button {
 }
 
 .header-cta {
-  display: none !important;
+  width: 2.75rem;
+  min-width: 2.75rem;
+  padding-inline: 0;
+}
+
+.header-cta span {
+  display: none;
 }
 
 .mobile-menu-button {
@@ -695,6 +719,12 @@ body.coffee-modal-open { overflow: hidden; }
 }
 
 @media (min-width: 64rem) {
+  .coffee-header-action span { display: inline; }
+  .header-cta {
+    width: auto;
+    padding-inline: 1rem;
+  }
+  .header-cta span { display: inline; }
   .site-footer__inner {
     grid-template-columns: minmax(0, 1.15fr) auto minmax(0, 0.85fr);
     align-items: center;

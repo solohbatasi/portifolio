@@ -3,9 +3,19 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import CoffeeModal from './CoffeeModal.vue'
 import SupportSection from '../home/SupportSection.vue'
 import * as paymentService from '../../services/supportPaymentService'
+import { useCoffeeModal } from '../../composables/useCoffeeModal'
+
+const ModalHost = {
+  components: { CoffeeModal, SupportSection },
+  setup() {
+    return { modal: useCoffeeModal() }
+  },
+  template: '<SupportSection /><CoffeeModal v-if="modal.isCoffeeModalOpen.value" :open="true" @close="modal.closeCoffeeModal" />',
+}
 
 beforeEach(() => {
   document.body.innerHTML = ''
+  useCoffeeModal().isCoffeeModalOpen.value = false
   vi.spyOn(paymentService, 'initiateCoffeePayment').mockResolvedValue({
     payment_id: 'txn_1234',
     status: 'pending',
@@ -20,7 +30,7 @@ afterEach(() => {
 
 describe('CoffeeModal', () => {
   it('opens from the section, moves focus inside and closes with Escape', async () => {
-    const wrapper = mount(SupportSection, { attachTo: document.body })
+    const wrapper = mount(ModalHost, { attachTo: document.body })
     await wrapper.get('button').trigger('click')
     const dialog = document.querySelector('[role="dialog"]')
 
@@ -85,7 +95,7 @@ describe('CoffeeModal', () => {
   })
 
   it('clears the phone after closing and reopening', async () => {
-    const wrapper = mount(SupportSection, { attachTo: document.body })
+    const wrapper = mount(ModalHost, { attachTo: document.body })
     await wrapper.get('button').trigger('click')
     const phone = document.querySelector('#coffee-phone')
     phone.value = '0712345678'

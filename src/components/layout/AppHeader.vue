@@ -1,16 +1,18 @@
 <script setup>
-import { Menu, X } from 'lucide-vue-next'
+import { Coffee, LogIn, Menu, X } from 'lucide-vue-next'
 import { nextTick, onBeforeUnmount, ref, watch } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import AppButton from '../common/AppButton.vue'
 import AppContainer from '../common/AppContainer.vue'
 import BrandLogo from '../common/BrandLogo.vue'
 import ThemeToggle from '../common/ThemeToggle.vue'
+import { useCoffeeModal } from '../../composables/useCoffeeModal'
 
 const route = useRoute()
 const isMenuOpen = ref(false)
 const menuButton = ref(null)
 const mobilePanel = ref(null)
+const coffeeModal = useCoffeeModal()
 
 const navigation = [
   { label: 'Home', to: '/' },
@@ -86,11 +88,26 @@ onBeforeUnmount(() => {
 
       <div class="site-header__actions">
         <ThemeToggle />
+        <button
+          type="button"
+          class="coffee-header-action"
+          aria-label="Buy Me a Coffee with M-PESA"
+          @click="coffeeModal.openCoffeeModal($event.currentTarget)"
+        >
+          <Coffee
+            :size="18"
+            aria-hidden="true"
+          />
+        </button>
         <AppButton
           class="header-cta"
-          to="/#work"
+          href="/admin/login"
+          aria-label="ogin"
         >
-          View Work
+          <LogIn
+            :size="18"
+            aria-hidden="true"
+          />
         </AppButton>
         <button
           ref="menuButton"
@@ -137,11 +154,15 @@ onBeforeUnmount(() => {
             {{ item.label }}
           </RouterLink>
           <AppButton
-            to="/#work"
+            href="/admin/login"
             class="mobile-nav__cta"
             @click="closeMenu()"
           >
-            View Work
+            <LogIn
+              :size="18"
+              aria-hidden="true"
+            />
+            Admin Login
           </AppButton>
         </nav>
       </AppContainer>

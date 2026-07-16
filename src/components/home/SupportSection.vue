@@ -1,19 +1,11 @@
 <script setup>
 import { Coffee, CreditCard, ShieldCheck } from 'lucide-vue-next'
-import { nextTick, ref } from 'vue'
 import AppButton from '../common/AppButton.vue'
 import AppContainer from '../common/AppContainer.vue'
-import CoffeeModal from '../support/CoffeeModal.vue'
 import { profile } from '../../data/profile'
+import { useCoffeeModal } from '../../composables/useCoffeeModal'
 
-const modalOpen = ref(false)
-const triggerButton = ref(null)
-
-async function closeModal() {
-  modalOpen.value = false
-  await nextTick()
-  triggerButton.value?.$el?.focus()
-}
+const coffeeModal = useCoffeeModal()
 </script>
 
 <template>
@@ -50,9 +42,8 @@ async function closeModal() {
           </li>
         </ul>
         <AppButton
-          ref="triggerButton"
           type="button"
-          @click="modalOpen = true"
+          @click="coffeeModal.openCoffeeModal($event.currentTarget)"
         >
           <Coffee
             :size="18"
@@ -61,10 +52,5 @@ async function closeModal() {
         </AppButton>
       </div>
     </AppContainer>
-    <CoffeeModal
-      v-if="modalOpen"
-      :open="modalOpen"
-      @close="closeModal"
-    />
   </section>
 </template>
