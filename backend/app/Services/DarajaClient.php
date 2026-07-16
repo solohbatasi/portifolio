@@ -26,7 +26,7 @@ final class DarajaClient
             'TransactionType' => config('daraja.transaction_type'),
             'Amount' => $amount,
             'PartyA' => $phone,
-            'PartyB' => config('daraja.shortcode'),
+            'PartyB' => config('daraja.party_b'),
             'PhoneNumber' => $phone,
             'CallBackURL' => config('daraja.callback_url'),
             'AccountReference' => config('daraja.coffee.account_reference'),
@@ -67,7 +67,7 @@ final class DarajaClient
             throw new DarajaException('Daraja transaction type is invalid.', 'invalid_transaction_type');
         }
 
-        foreach (['shortcode', 'passkey', 'callback_url'] as $key) {
+        foreach (['shortcode', 'party_b', 'passkey', 'callback_url'] as $key) {
             if (! is_string(config("daraja.{$key}")) || config("daraja.{$key}") === '') {
                 throw new DarajaException('Daraja is not configured.', 'daraja_not_configured');
             }

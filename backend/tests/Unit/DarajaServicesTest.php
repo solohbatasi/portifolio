@@ -21,6 +21,7 @@ class DarajaServicesTest extends TestCase
             'daraja.consumer_key' => 'test-consumer-key',
             'daraja.consumer_secret' => 'test-consumer-secret',
             'daraja.shortcode' => '123456',
+            'daraja.party_b' => '123456',
             'daraja.passkey' => 'test-passkey',
             'daraja.callback_url' => 'https://portfolio.test/api/mpesa/stk/callback',
             'daraja.transaction_type' => 'CustomerPayBillOnline',
@@ -69,6 +70,7 @@ class DarajaServicesTest extends TestCase
 
             return $request['BusinessShortCode'] === '123456'
                 && $request['TransactionType'] === 'CustomerPayBillOnline'
+                && $request['PartyB'] === '123456'
                 && $request['Amount'] === 250
                 && $request['PartyA'] === '254716933897'
                 && $request['PhoneNumber'] === '254716933897'
@@ -79,12 +81,16 @@ class DarajaServicesTest extends TestCase
     public function test_till_transaction_type_is_not_guessed_from_shortcode(): void
     {
         config()->set('daraja.transaction_type', 'CustomerBuyGoodsOnline');
+        config()->set('daraja.party_b', '654321');
         Http::fake([
             'https://daraja.test/oauth/*' => Http::response(['access_token' => 'test-token']),
             '*' => Http::response(['MerchantRequestID' => 'merchant-1', 'CheckoutRequestID' => 'checkout-1']),
         ]);
         app(DarajaClient::class)->initiate('254716933897', 250);
-        Http::assertSent(fn ($request) => ! str_contains($request->url(), '/oauth/') && $request['TransactionType'] === 'CustomerBuyGoodsOnline');
+        Http::assertSent(fn ($request) => ! str_contains($request->url(), '/oauth/')
+            && $request['TransactionType'] === 'CustomerBuyGoodsOnline'
+            && $request['BusinessShortCode'] === '123456'
+            && $request['PartyB'] === '654321');
     }
 
     public function test_stk_status_query_uses_stored_checkout_identifier_payload(): void

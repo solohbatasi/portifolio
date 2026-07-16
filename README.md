@@ -95,6 +95,7 @@ DARAJA_BASE_URL=https://api.safaricom.co.ke
 DARAJA_CONSUMER_KEY=
 DARAJA_CONSUMER_SECRET=
 DARAJA_SHORTCODE=
+DARAJA_PARTY_B=
 DARAJA_PASSKEY=
 DARAJA_TRANSACTION_TYPE=CustomerPayBillOnline
 DARAJA_CALLBACK_URL=https://portfolio-domain.example/api/mpesa/stk/callback
@@ -102,12 +103,14 @@ DARAJA_CALLBACK_URL=https://portfolio-domain.example/api/mpesa/stk/callback
 COFFEE_MIN_AMOUNT=50
 COFFEE_MAX_AMOUNT=10000
 COFFEE_PRESET_AMOUNTS=100,250,500,1000
-COFFEE_ACCOUNT_REFERENCE=SOLOMON-PORTFOLIO
-COFFEE_TRANSACTION_DESCRIPTION="Support Solomon Batasi"
+COFFEE_ACCOUNT_REFERENCE=SBATASI
+COFFEE_TRANSACTION_DESCRIPTION=Support
 PORTFOLIO_FRONTEND_URL=https://portfolio-domain.example
 ```
 
 Use `CustomerPayBillOnline` for a PayBill and `CustomerBuyGoodsOnline` for a Till. Configure this explicitly; never infer it from the shortcode.
+
+`DARAJA_SHORTCODE` is the production business/agent shortcode used with the passkey and STK password. `DARAJA_PARTY_B` is the receiving identifier sent to Daraja. For PayBill it normally matches the shortcode. For Buy Goods, set it to the exact production store/Till identifier that Safaricom has paired with the business shortcode. Do not interchange these identifiers; an invalid agent/store pairing is rejected with a callback such as result code `2002`.
 
 The consumer key, consumer secret, shortcode, passkey, OAuth token and generated password are server-only. Never add them to `VITE_` variables, Vue code, public files, logs, test fixtures or documentation.
 

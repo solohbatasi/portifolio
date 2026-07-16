@@ -20,7 +20,7 @@ class CoffeePaymentReconciliationTest extends TestCase
             'cache.default' => 'array',
             'daraja.base_url' => 'https://daraja.test',
             'daraja.consumer_key' => 'test-key', 'daraja.consumer_secret' => 'test-secret',
-            'daraja.shortcode' => '123456', 'daraja.passkey' => 'test-passkey',
+            'daraja.shortcode' => '123456', 'daraja.party_b' => '123456', 'daraja.passkey' => 'test-passkey',
             'daraja.callback_url' => 'https://portfolio.test/api/mpesa/stk/callback',
             'daraja.transaction_type' => 'CustomerPayBillOnline',
             'daraja.coffee.query_after_seconds' => 30, 'daraja.coffee.query_interval_seconds' => 30,

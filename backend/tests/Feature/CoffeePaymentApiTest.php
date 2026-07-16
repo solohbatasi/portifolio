@@ -23,6 +23,7 @@ class CoffeePaymentApiTest extends TestCase
             'daraja.consumer_key' => 'test-key',
             'daraja.consumer_secret' => 'test-secret',
             'daraja.shortcode' => '123456',
+            'daraja.party_b' => '123456',
             'daraja.passkey' => 'test-passkey',
             'daraja.callback_url' => 'https://portfolio.test/api/mpesa/stk/callback',
             'daraja.transaction_type' => 'CustomerPayBillOnline',
