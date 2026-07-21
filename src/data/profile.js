@@ -6,7 +6,7 @@ export const profile = {
   },
   brand: {
     signaturePath: '/brand/solomon-batasi-signature.svg',
-    lockupPath: '/brand/solomon-batasi-lock.svg',
+    lockupPath: '/brand/solomon-batasi-signature.svg',
     tagline: 'Building Solutions. Creating Impact.',
   },
   primaryTitle: 'Full-Stack Software Engineer & Solutions Architect',
@@ -38,7 +38,7 @@ export const profile = {
     telephone: +254716933897, // TODO: Add Solomon's preferred public telephone number.
     whatsappUrl: null, // TODO: Add Solomon's verified WhatsApp URL.
     linkedInUrl: null, // TODO: Add Solomon's verified LinkedIn URL.
-    cvPath: profile.contact.cvPath, // TODO: Add the public CV path after the document is approved.
+    cvPath: null, // TODO: Add the public CV path after the document is approved.
   },
   support: {
     description:
@@ -47,7 +47,7 @@ export const profile = {
     endpoint: '/api/coffee-payments',
     presetAmounts: [100, 250, 500, 1000],
     minimumAmount: 10,
-    maximumAmount: ,
+    maximumAmount: 10000,
   },
   credibility: [
     'Enterprise systems',

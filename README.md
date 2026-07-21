@@ -80,6 +80,35 @@ dist/                        Standalone Vue build artifact
 - Put an approved CV in `public/documents/`, then set `profile.contact.cvPath`.
 - Never publish confidential screenshots, credentials, private endpoints or repository URLs.
 
+### Adding project screenshots
+
+Create one folder per project inside `public/images/projects/`, using the same value as the project slug. For example:
+
+```text
+public/images/projects/driving-school-management-system/
+  cover.webp
+  learner-ticket.webp
+  instructor-check-in.webp
+```
+
+Use WebP where practical, remove personal or financial information, and keep interface screenshots around 1600 × 900 pixels (16:9). Then update the matching entry in `src/data/projects.js`:
+
+```js
+image: '/images/projects/driving-school-management-system/cover.webp',
+imageWidth: 1600,
+imageHeight: 900,
+gallery: [
+  {
+    src: '/images/projects/driving-school-management-system/learner-ticket.webp',
+    alt: 'Learner lesson ticket with demonstration QR data',
+    width: 1600,
+    height: 900,
+  },
+],
+```
+
+Never upload screenshots containing real learner details, phone numbers, payment records, QR tickets that remain valid, credentials, private URLs or client-confidential information. Use demonstration records and confirm that every screenshot is approved for public display.
+
 ## Daraja configuration
 
 Copy `backend/.env.example` to `backend/.env`. Configure values only in the Laravel environment:

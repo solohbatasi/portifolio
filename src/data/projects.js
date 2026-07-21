@@ -310,8 +310,8 @@ export const projects = [
     gallery: [],
     liveUrl: null,
     repositoryUrl: null,
-    featured: true,
-    sortOrder: 4,
+    featured: false,
+    sortOrder: 7,
   },
   {
     id: 'college-management-system',
@@ -380,8 +380,8 @@ export const projects = [
     gallery: [],
     liveUrl: null,
     repositoryUrl: null,
-    featured: true,
-    sortOrder: 5,
+    featured: false,
+    sortOrder: 8,
   },
   {
     id: 'school-verification-platform',
@@ -447,8 +447,8 @@ export const projects = [
     gallery: [],
     liveUrl: null,
     repositoryUrl: null,
-    featured: true,
-    sortOrder: 6,
+    featured: false,
+    sortOrder: 9,
   },
   {
     id: 'isp-router-management-saas',
@@ -522,7 +522,7 @@ export const projects = [
     liveUrl: null,
     repositoryUrl: null,
     featured: false,
-    sortOrder: 7,
+    sortOrder: 10,
   },
   {
     id: 'driving-school-management-system',
@@ -530,9 +530,9 @@ export const projects = [
     title: 'Pace Driving School Management System',
     category: 'Institutional Management',
     shortSummary:
-      'A driving-school administration platform for enrolment, fees, class allocation, attendance and session tracking.',
+      'A driving-school platform for enrolment, fees, lessons and QR-based learner check-in.',
     fullDescription:
-      'A driving-school administration platform for enrolment, fee management, class allocation, attendance and practical or theoretical session tracking.',
+      'A driving-school management platform connecting learner enrolment, fee management, lesson scheduling and ticket-based attendance. Learners generate lesson tickets with QR codes that instructors scan to check them into practical or theoretical sessions.',
     role: 'Full-Stack Software Engineer',
     status: 'Completed implementation',
     repositoryVisibility: 'Private commercial project',
@@ -547,13 +547,13 @@ export const projects = [
       {
         id: 'application',
         label: 'Laravel school application',
-        detail: 'Enrolment, fees, classes, sessions and attendance',
+        detail: 'Enrolment, fees, lessons, QR tickets and attendance',
         type: 'application',
       },
       {
         id: 'database',
         label: 'MySQL institutional data',
-        detail: 'Students, courses, fees, tickets, sessions and attendance',
+        detail: 'Students, courses, fees, QR tickets, lessons and check-ins',
         type: 'database',
       },
       {
@@ -568,6 +568,8 @@ export const projects = [
       'Course assignment',
       'Fee tracking',
       'Session ticketing',
+      'Learner-generated lesson tickets with QR codes',
+      'Instructor QR scanning and lesson check-in',
       'Practical and theoretical class management',
       'Attendance',
       'Student accounts',
@@ -576,20 +578,134 @@ export const projects = [
     responsibilities: [
       'Designed student, course, fee and session data workflows',
       'Developed enrolment and student-account interfaces',
-      'Built class allocation, ticketing and attendance features',
+      'Built lesson allocation, QR ticket generation and instructor check-in workflows',
       'Implemented administrative reporting workflows',
     ],
     challenge:
-      'Bring enrolment, fee records, class allocation and practical or theoretical session tracking into one coherent administration workflow.',
+      'Connect enrolment, fee records and lesson attendance while giving instructors a dependable way to verify each learner at check-in.',
     solution:
-      'Built a Laravel and Vue.js system connecting student accounts, course assignments, fee tracking, session ticketing, attendance and reporting.',
+      'Built a Laravel and Vue.js system connecting student accounts, fees and lesson allocation with learner-generated QR tickets that instructors scan when recording attendance.',
     outcome:
       'Completed the requested implementation for the driving school’s core administration workflows.',
     image: null,
     gallery: [],
-    liveUrl: null,
+    liveUrl: 'https://pacedrivingschool.co.ke',
     repositoryUrl: null,
-    featured: false,
-    sortOrder: 8,
+    featured: true,
+    sortOrder: 4,
+  },
+  {
+    id: 'global-ministries-daily-bread',
+    slug: 'global-ministries-daily-bread',
+    title: 'Global Ministries Daily Bread',
+    category: 'Ministry and Publishing',
+    shortSummary:
+      'A public ministry website for publishing faith-based resources, organisational information and updates.',
+    fullDescription:
+      'A public-facing digital platform for Global Ministries Daily Bread, structured to make ministry information, resources and updates accessible across desktop and mobile devices.',
+    role: 'Full-Stack Software Engineer',
+    status: 'Production system',
+    repositoryVisibility: 'Private implementation',
+    technologies: [],
+    architecture: [
+      {
+        id: 'client',
+        label: 'Public website',
+        detail: 'Responsive access to ministry information and published resources',
+        type: 'client',
+      },
+      {
+        id: 'application',
+        label: 'Content application',
+        detail: 'Page delivery and structured publishing workflows',
+        type: 'application',
+      },
+      {
+        id: 'database',
+        label: 'Website content',
+        detail: 'Organisational information, resources and updates',
+        type: 'database',
+      },
+    ],
+    capabilities: [
+      'Responsive public website',
+      'Structured ministry information',
+      'Resource and update publishing',
+      'Accessible navigation across device sizes',
+    ],
+    responsibilities: [
+      'Structured the public website and its content presentation',
+      'Developed responsive visitor-facing pages',
+      'Prepared the website for production hosting and ongoing publishing',
+    ],
+    challenge:
+      'Present ministry information and published resources through a clear, accessible public website.',
+    solution:
+      'Delivered a responsive website with structured navigation and maintainable content areas for organisational information and ministry resources.',
+    outcome:
+      'The website provides a public digital presence for Global Ministries Daily Bread. No audience or performance figures are claimed.',
+    image: null,
+    gallery: [],
+    liveUrl: 'https://globalministriesdailybread.org',
+    repositoryUrl: null,
+    featured: true,
+    sortOrder: 5,
+  },
+  {
+    id: 'empowerment-missions',
+    slug: 'empowerment-missions',
+    title: 'Empowerment Missions',
+    category: 'Nonprofit and Institutional',
+    shortSummary:
+      'A public organisational website presenting Empowerment Missions, its work and visitor-facing information.',
+    fullDescription:
+      'A responsive public website for Empowerment Missions, designed to communicate the organisation’s purpose, work and key information through a clear, maintainable digital presence.',
+    role: 'Full-Stack Software Engineer',
+    status: 'Production system',
+    repositoryVisibility: 'Private implementation',
+    technologies: [],
+    architecture: [
+      {
+        id: 'client',
+        label: 'Public website',
+        detail: 'Responsive visitor experience across mobile and desktop',
+        type: 'client',
+      },
+      {
+        id: 'application',
+        label: 'Website application',
+        detail: 'Structured organisational pages and content delivery',
+        type: 'application',
+      },
+      {
+        id: 'database',
+        label: 'Organisational content',
+        detail: 'Mission information, programmes and public updates',
+        type: 'database',
+      },
+    ],
+    capabilities: [
+      'Responsive public pages',
+      'Organisational information architecture',
+      'Programme and mission presentation',
+      'Production web deployment',
+    ],
+    responsibilities: [
+      'Designed the public-facing information structure',
+      'Developed responsive pages and navigation',
+      'Prepared and deployed the website for public access',
+    ],
+    challenge:
+      'Give the organisation a coherent public presence that makes its purpose and work easy to understand on any device.',
+    solution:
+      'Built a responsive website with disciplined content structure, accessible navigation and maintainable public information areas.',
+    outcome:
+      'The website provides Empowerment Missions with a production public presence. No impact figures are inferred or published.',
+    image: null,
+    gallery: [],
+    liveUrl: 'https://empowermentmissions.org',
+    repositoryUrl: null,
+    featured: true,
+    sortOrder: 6,
   },
 ]
