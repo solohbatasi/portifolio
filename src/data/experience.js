@@ -57,7 +57,7 @@ export const education = [
     id: 'bsc-applied-computer-science',
     qualification: 'Bachelor of Science in Applied Computer Science',
     institution: 'Chuka University',
-    classification: '',
+    classification: ' ',
     startYear: 2019,
     endYear: 2023,
   },
@@ -67,7 +67,7 @@ export const certifications = [
   {
     id: 'ic3-certification',
     name: 'IC3 — Internet and Computing Core Certification',
-    result: '',
+    result: ' ',
     issuedAt: 'March 2018',
     issuer: null, // TODO: Add the verified issuing organisation if required.
     credentialUrl: null, // TODO: Add a public credential URL if one is available.
