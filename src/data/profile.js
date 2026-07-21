@@ -34,11 +34,11 @@ export const profile = {
     },
   },
   contact: {
-    email: null, // TODO: Add Solomon's preferred public email address.
-    telephone: null, // TODO: Add Solomon's preferred public telephone number.
+    email: 'solomon@batasi.guru', // TODO: Add Solomon's preferred public email address.
+    telephone: +254716933897, // TODO: Add Solomon's preferred public telephone number.
     whatsappUrl: null, // TODO: Add Solomon's verified WhatsApp URL.
     linkedInUrl: null, // TODO: Add Solomon's verified LinkedIn URL.
-    cvPath: null, // TODO: Add the public CV path after the document is approved.
+    cvPath: profile.contact.cvPath, // TODO: Add the public CV path after the document is approved.
   },
   support: {
     description:
@@ -46,8 +46,8 @@ export const profile = {
     currency: 'KES',
     endpoint: '/api/coffee-payments',
     presetAmounts: [100, 250, 500, 1000],
-    minimumAmount: 50,
-    maximumAmount: 10000,
+    minimumAmount: 10,
+    maximumAmount: ,
   },
   credibility: [
     'Enterprise systems',
