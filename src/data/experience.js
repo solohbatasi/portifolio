@@ -5,7 +5,7 @@ export const experience = [
     title: 'Full-Stack Software Engineer / Solutions Architect',
     startDate: null, // TODO: Add the verified start date.
     endDate: null,
-    current: true,
+    current: false,
     location: 'Remote',
     summary:
       'Current software-engineering work focused on payment platforms, application architecture, API development, integrations and production delivery.',
@@ -35,12 +35,12 @@ export const experience = [
   },
   {
     id: 'ministry-education-software-engineer',
-    organisation: 'Ministry of Education — Nyamira South',
+    organisation: 'Ministry of Education',
     title: 'Software Engineer',
     startDate: null,
     endDate: null,
     current: false,
-    location: 'Nyamira South',
+    location: 'Jogoo Hse',
     summary:
       'Software-engineering work supporting education-sector systems, institutional workflows and reliable delivery of public-sector technology.',
     responsibilities: [
@@ -71,5 +71,23 @@ export const certifications = [
     issuedAt: 'March 2018',
     issuer: null, // TODO: Add the verified issuing organisation if required.
     credentialUrl: null, // TODO: Add a public credential URL if one is available.
+  },
+  {
+    id: 'devops-web-development-bootcamp',
+    name: 'Learn DevOps for Web Development',
+    result: '7-day bootcamp · February 2023',
+    issuedAt: 'February 2023',
+    issuer: null,
+    issuers: ['GDSC KIIT Chapter', 'Microsoft Learn Student Ambassadors', 'DevTown'],
+    credentialUrl: null,
+  },
+  {
+    id: 'javascript-react-web-development-bootcamp',
+    name: 'Front-End Web Development using JavaScript and React.js',
+    result: '7-day bootcamp · February 2023',
+    issuedAt: 'February 2023',
+    issuer: null,
+    issuers: ['GDSC KIIT Chapter', 'Microsoft Learn Student Ambassadors', 'DevTown'],
+    credentialUrl: null,
   },
 ]

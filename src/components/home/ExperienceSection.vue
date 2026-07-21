@@ -84,7 +84,14 @@ import { profile } from '../../data/profile'
               <span>Certification</span>
               <h3>{{ item.name }}</h3>
               <p>{{ item.result }}</p>
-              <small>{{ item.issuedAt }}</small>
+              <small>
+                <template v-if="item.issuers?.length">{{ item.issuers.join(' · ') }}</template>
+                <template v-else>
+                  <template v-if="item.issuer">{{ item.issuer }}</template>
+                  <template v-if="item.issuer && item.issuedAt"> · </template>
+                  <template v-if="item.issuedAt">{{ item.issuedAt }}</template>
+                </template>
+              </small>
             </div>
           </article>
         </div>
