@@ -310,7 +310,7 @@ export const projects = [
     gallery: [],
     liveUrl: null,
     repositoryUrl: null,
-    featured: false,
+    featured: true,
     sortOrder: 7,
   },
   {
@@ -380,7 +380,7 @@ export const projects = [
     gallery: [],
     liveUrl: null,
     repositoryUrl: null,
-    featured: false,
+    featured: true,
     sortOrder: 8,
   },
   {
@@ -447,7 +447,7 @@ export const projects = [
     gallery: [],
     liveUrl: null,
     repositoryUrl: null,
-    featured: false,
+    featured: true,
     sortOrder: 9,
   },
   {

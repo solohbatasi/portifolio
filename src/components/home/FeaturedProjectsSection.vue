@@ -9,8 +9,7 @@ import { projects } from '../../data/projects'
 const featuredProjects = computed(() =>
   projects
     .filter((project) => project.featured)
-    .sort((a, b) => a.sortOrder - b.sortOrder)
-    .slice(0, 6),
+    .sort((a, b) => a.sortOrder - b.sortOrder),
 )
 </script>
 
