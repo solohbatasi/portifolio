@@ -1,13 +1,31 @@
 export const experience = [
   {
+    id: 'kadi-labs',
+    organisation: 'Kadi Labs',
+    title: 'Full-Stack Software Engineer / Solutions Architect',
+    startDate: null, // TODO: Add the verified start date.
+    endDate: null,
+    current: true,
+    location: 'Remote',
+    summary:
+      'Current software-engineering work focused on payment platforms, application architecture, API development, integrations and production delivery.',
+    responsibilities: [
+      'Full-stack application and API development',
+      'Payment-system architecture and M-PESA integrations',
+      'Relational database and transaction workflow design',
+      'Production deployment, monitoring and technical support',
+    ],
+  },
+  {
     id: 'javapa-ltd',
     organisation: 'JavaPA Ltd',
     title: 'Full-Stack Software Engineer / Solutions Architect',
     startDate: null, // TODO: Add the verified start date.
-    endDate: null, // TODO: Add the verified end date or mark the role as current.
-    location: null, // TODO: Add the verified work location if it should be public.
+    endDate: null, // TODO: Add the verified end date.
+    current: false,
+    location: 'Remote',
     summary:
-      'Technical leadership across application architecture, full-stack delivery, external integrations and production deployment.',
+      'Remote software-engineering work across application architecture, full-stack delivery, external integrations and production deployment.',
     responsibilities: [
       'Application and relational database architecture',
       'Backend, API and frontend development',
@@ -16,15 +34,21 @@ export const experience = [
     ],
   },
   {
-    id: 'ministry-education-ict-dlp',
+    id: 'ministry-education-software-engineer',
     organisation: 'Ministry of Education — Nyamira South',
-    title: 'ICT / Digital Literacy Programme experience',
+    title: 'Software Engineer',
     startDate: null,
     endDate: null,
+    current: false,
     location: 'Nyamira South',
     summary:
-      'ICT and Digital Literacy Programme experience supporting technology use within the education environment.',
-    responsibilities: [],
+      'Software-engineering work supporting education-sector systems, institutional workflows and reliable delivery of public-sector technology.',
+    responsibilities: [
+      'Backend services and education-system workflows',
+      'Relational data and API integration work',
+      'Role-based institutional application features',
+      'Deployment and production support',
+    ],
   },
 ]
 

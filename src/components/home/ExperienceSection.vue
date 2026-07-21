@@ -31,7 +31,11 @@ import { profile } from '../../data/profile'
               aria-hidden="true"
             />
             <div>
-              <p>{{ item.organisation }}</p>
+              <p>
+                {{ item.organisation }}
+                <span v-if="item.current"> · Current</span>
+                <span v-if="item.location"> · {{ item.location }}</span>
+              </p>
               <h3>{{ item.title }}</h3>
               <p class="experience-item__summary">
                 {{ item.summary }}

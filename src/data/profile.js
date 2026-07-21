@@ -19,7 +19,7 @@ export const profile = {
   professionalSummary:
     'I\'m a full-stack software engineer experienced in taking systems from requirements and database design through frontend development, backend architecture, external integrations, deployment and production support.',
   company: {
-    name: 'JavaPA Ltd',
+    name: 'Kadi Labs',
     url: null, // TODO: Add the verified company URL when available.
   },
   github: {
