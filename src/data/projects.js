@@ -164,7 +164,7 @@ export const projects = [
   {
     id: 'water-utility-billing-platform',
     slug: 'water-utility-billing-platform',
-    title: 'NYAWASCO Water Billing Platform',
+    title: 'Utility (Water) Billing Platform',
     category: 'Utilities',
     shortSummary:
       'An integrated utility platform for meter operations, billing, payment allocation, reconciliation and customer account management.',
@@ -173,7 +173,7 @@ export const projects = [
     role: 'Lead Full-Stack Software Engineer',
     status: 'Production system',
     repositoryVisibility: 'Private commercial implementation',
-    technologies: ['Laravel', 'Vue.js', 'MySQL', 'REST APIs', 'Linux'],
+   
     architecture: [
       {
         id: 'client',
@@ -250,7 +250,7 @@ export const projects = [
     role: 'Lead Full-Stack Software Engineer',
     status: 'Production system',
     repositoryVisibility: 'Private commercial project',
-    technologies: ['Laravel', 'Vue.js', 'MySQL', 'Payment APIs', 'Webhooks'],
+   
     architecture: [
       {
         id: 'client',
@@ -308,7 +308,7 @@ export const projects = [
       'The production system supports paid contests from nominee setup and public voting through transaction tracking and reconciliation.',
     image: null,
     gallery: [],
-    liveUrl: null,
+    liveUrl: 'pulsetikafrica.com',
     repositoryUrl: null,
     featured: true,
     sortOrder: 7,
@@ -325,7 +325,6 @@ export const projects = [
     role: 'Full-Stack Software Engineer',
     status: 'Active development',
     repositoryVisibility: 'Selected public development work',
-    technologies: ['Laravel', 'Vue.js', 'Inertia.js', 'PostgreSQL'],
     architecture: [
       {
         id: 'client',
@@ -395,7 +394,6 @@ export const projects = [
     role: 'Backend and API Engineer',
     status: 'Institutional project',
     repositoryVisibility: 'Private',
-    technologies: ['Laravel', 'MySQL', 'REST APIs', 'JavaScript'],
     architecture: [
       {
         id: 'client',
@@ -462,7 +460,6 @@ export const projects = [
     role: 'Software Architect and Full-Stack Engineer',
     status: 'Product development',
     repositoryVisibility: 'Private',
-    technologies: ['Laravel', 'Vue.js', 'Inertia.js', 'MikroTik APIs'],
     architecture: [
       {
         id: 'client',
@@ -527,7 +524,7 @@ export const projects = [
   {
     id: 'driving-school-management-system',
     slug: 'driving-school-management-system',
-    title: 'Pace Driving School Management System',
+    title: 'Driving School Management System',
     category: 'Institutional Management',
     shortSummary:
       'A driving-school platform for enrolment, fees, lessons and QR-based learner check-in.',
